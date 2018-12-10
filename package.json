@@ -1,0 +1,23 @@
+{
+  "name": "builder",
+  "version": "0.0.1",
+  "author": "krabaton",
+  "license": "ISC",
+  "scripts": {
+    "start": "set PORT=3003&& nodemon --ignore ./db/db.json app.js"
+  },
+  "devDependencies": {
+    "eslint": "^5.10.0"
+  },
+  "dependencies": {
+    "koa": "^2.6.2",
+    "koa-body": "^4.0.4",
+    "koa-flash-simple": "^0.0.3",
+    "koa-pug": "^3.0.0-2",
+    "koa-router": "^7.4.0",
+    "koa-session": "^5.10.0",
+    "koa-static": "^5.0.0",
+    "lowdb": "^1.0.0",
+    "pug": "^2.0.3"
+  }
+}
