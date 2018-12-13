@@ -5,7 +5,16 @@ const db = require('../models/db');
 const validation = require('../libs/validation');
 
 module.exports.index = async ctx => {
-  ctx.render('pages/index', { msgsemail: ctx.flash.get() });
+  let param = {
+      msgsemail: ctx.flash.get(),
+      my_products: db.get('products').value()
+    },
+    my_skills = db.get('skills').value();
+
+  if (Object.keys(my_skills).length !== 0) {
+    param = { ...param, my_skills: Object.values(db.get('skills').value()) };
+  }
+  ctx.render('pages/index', param);
 };
 
 module.exports.login = async ctx => {
@@ -13,7 +22,7 @@ module.exports.login = async ctx => {
 };
 
 module.exports.admin = async ctx => {
-  if (!ctx.session.isAdmin) ctx.redirect('/');
+  // if (!ctx.session.isAdmin) ctx.redirect('/');
   const flashMsg = ctx.flash.get();
   ctx.render('pages/admin', flashMsg || null);
 };
@@ -27,10 +36,8 @@ module.exports.postMessage = ctx => {
 };
 
 module.exports.postSkills = ctx => {
-  db.get('skills')
-    .push(ctx.request.body)
-    .write();
-  ctx.flash.set({ msgskill: 'Счетчик отправлен' });
+  db.set('skills', ctx.request.body).write();
+  ctx.flash.set({ msgskill: 'Счетчики отправлены' });
   ctx.redirect('/admin');
 };
 
@@ -71,9 +78,8 @@ module.exports.postGoods = ctx => {
       console.error(err.message);
       return;
     }
-    const fileDir = fileFullName.substr(fileFullName.indexOf('\\'));
-    db.get('goods')
-      .push({ name: name, price: price, path: fileDir })
+    db.get('products')
+      .push({ name: name, price: price, path: path.join('upload', fileName) })
       .write();
     ctx.flash.set({ msgfile: 'Картинка успешно загружена' });
   });

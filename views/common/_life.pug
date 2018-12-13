@@ -4,8 +4,8 @@ section.life
     - var br = "<br/>"
     .life__slogan У музыки нет возраста и нации, !{br} однажды мы уйдём, а она останется.
     ul.life__skills
-      each item in skills
+      each item, index in skills
         li.life__skill
-          .life__skill-number= item.number
+          .life__skill-number= my_skills !== undefined ? my_skills[index] : item.number
           .life__skill-text= item.text
     a(href="http://").life__link Читать историю

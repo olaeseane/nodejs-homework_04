@@ -4,6 +4,6 @@
     "email": "test@test.test",
     "password": "test"
   },
-  "skills": [],
-  "goods": []
+  "skills": {},
+  "products": []
 }

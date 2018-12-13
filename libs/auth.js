@@ -1,0 +1,1 @@
+module.exports = (ctx, next) => ctx.session.isAdmin ? next() : ctx.redirect('/');
